@@ -1,6 +1,6 @@
 Name: grubby
 Version: 7.0.16
-Release: 1%{?dist}
+Release: 2%{?dist}
 Summary: Command line tool for updating bootloader configs
 Group: System Environment/Base
 License: GPLv2+
@@ -12,6 +12,8 @@ Source0: %{name}-%{version}.tar.bz2
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildRequires: pkgconfig glib2-devel popt-devel 
 BuildRequires: libblkid-devel
+# for make test / getopt:
+BuildRequires: util-linux-ng
 %ifarch s390 s390x
 Requires: s390utils-base
 %endif
@@ -52,6 +54,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Mon Jan 24 2011 Karsten Hopp <karsten@redhat.com> 7.0.16-2
+- add BR utils-linux-ng for getopt
+
 * Tue Jul 13 2010 Brian C. Lane <bcl@redhat.com> - 7.0.16-1
 - Update to 7.0.16
 - Add patch to check the return value of getuuidbydev
