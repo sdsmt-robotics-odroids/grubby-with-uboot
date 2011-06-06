@@ -1,6 +1,6 @@
 Name: grubby
-Version: 7.0.16
-Release: 3%{?dist}
+Version: 7.0.17
+Release: 1%{?dist}
 Summary: Command line tool for updating bootloader configs
 Group: System Environment/Base
 License: GPLv2+
@@ -54,6 +54,10 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Mon Jun 06 2011 Peter Jones <pjones@redhat.com> - 7.0.17-1
+- Fix references to wrong program name in new-kernel-pkg.8
+  Resolves: rhbz#663981
+
 * Wed Feb 09 2011 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 7.0.16-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_15_Mass_Rebuild
 
