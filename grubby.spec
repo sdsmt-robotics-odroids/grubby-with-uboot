@@ -1,5 +1,5 @@
 Name: grubby
-Version: 7.0.17
+Version: 7.0.18
 Release: 1%{?dist}
 Summary: Command line tool for updating bootloader configs
 Group: System Environment/Base
@@ -54,6 +54,10 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Tue Jun 07 2011 Brian C. Lane <bcl@redhat.com> - 7.0.18-1
+- Bump version to 7.0.18 (bcl)
+- Fixup new-kernel-pkg errors (#711493) (bcl)
+
 * Mon Jun 06 2011 Peter Jones <pjones@redhat.com> - 7.0.17-1
 - Fix references to wrong program name in new-kernel-pkg.8
   Resolves: rhbz#663981
