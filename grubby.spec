@@ -1,5 +1,5 @@
 Name: grubby
-Version: 7.0.18
+Version: 8.0
 Release: 1%{?dist}
 Summary: Command line tool for updating bootloader configs
 Group: System Environment/Base
@@ -54,6 +54,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Thu Jul 21 2011 Peter Jones <pjones@redhat.com> - 8.0-1
+- Add support for grub2.
+
 * Tue Jun 07 2011 Brian C. Lane <bcl@redhat.com> - 7.0.18-1
 - Bump version to 7.0.18 (bcl)
 - Fixup new-kernel-pkg errors (#711493) (bcl)
