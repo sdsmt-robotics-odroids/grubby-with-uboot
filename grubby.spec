@@ -1,5 +1,5 @@
 Name: grubby
-Version: 8.3
+Version: 8.4
 Release: 1%{?dist}
 Summary: Command line tool for updating bootloader configs
 Group: System Environment/Base
@@ -54,6 +54,19 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Thu Dec 08 2011 Adam Williamson <awilliam@redhat.com> - 8.4-1
+- Update to 8.4:
+	+ fix Loading... line for updated kernels
+	+ Add new '--default-title' feature
+	+ Add new '--default-index' feature
+	+ add feature for testing the output of a grubby command
+	+ Fix detection when comparing stage1 to MBR
+	+ do not link against glib-2.0
+	+ Don't crash if grubConfig not found
+	+ Adding extlinux support for new-kernel-pkg
+	+ Look for Debian / Ubuntu grub config files (#703260)
+	+ Make grubby recognize Ubuntu's spin of Grub2 (#703260)
+
 * Thu Sep 29 2011 Peter Jones <pjones@redhat.com> - 8.3-1
 - Fix new-kernel-pkg invocation of grubby for grub (patch from Mads Kiilerich)
   Resolves: rhbz#725185
