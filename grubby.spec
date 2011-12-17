@@ -1,5 +1,5 @@
 Name: grubby
-Version: 8.4
+Version: 8.5
 Release: 1%{?dist}
 Summary: Command line tool for updating bootloader configs
 Group: System Environment/Base
@@ -54,6 +54,10 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Sat Dec 17 2011 Peter Jones <pjones@redhat.com> - 8.5-1
+- Don't hardcode dracut path
+  Resolves: #768645
+
 * Thu Dec 08 2011 Adam Williamson <awilliam@redhat.com> - 8.4-1
 - Update to 8.4:
 	+ fix Loading... line for updated kernels
