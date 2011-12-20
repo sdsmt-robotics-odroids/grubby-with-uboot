@@ -1,5 +1,5 @@
 Name: grubby
-Version: 8.7
+Version: 8.8
 Release: 1%{?dist}
 Summary: Command line tool for updating bootloader configs
 Group: System Environment/Base
@@ -54,6 +54,9 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Tue Dec 20 2011 Peter Jones <pjones@redhat.com> - 8.8-1
+- Fix test cases from 8.7 to work on a system without /boot mounted.
+
 * Tue Dec 20 2011 Peter Jones <pjones@redhat.com> - 8.7-1
 - Add a --debug to try to help diagnose "No suitable template". (sandeen,pjones)
 
