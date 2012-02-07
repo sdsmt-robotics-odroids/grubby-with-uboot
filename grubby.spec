@@ -1,6 +1,6 @@
 Name: grubby
 Version: 8.8
-Release: 2%{?dist}
+Release: 3%{?dist}
 Summary: Command line tool for updating bootloader configs
 Group: System Environment/Base
 License: GPLv2+
@@ -16,6 +16,9 @@ BuildRequires: libblkid-devel
 BuildRequires: util-linux-ng
 %ifarch s390 s390x
 Requires: s390utils-base
+%endif
+%ifarch %{arm}
+Requires: uboot-tools
 %endif
 
 %description
@@ -38,7 +41,10 @@ make test
 %install
 rm -rf $RPM_BUILD_ROOT
 make install DESTDIR=$RPM_BUILD_ROOT mandir=%{_mandir}
-
+%ifarch %{arm}
+mkdir -p $RPM_BUILD_ROOT%{_sysconfdir}/sysconfig/
+install -p uboot $RPM_BUILD_ROOT%{_sysconfdir}/sysconfig/uboot
+%endif
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -51,9 +57,15 @@ rm -rf $RPM_BUILD_ROOT
 /sbin/new-kernel-pkg
 /sbin/grubby
 %{_mandir}/man8/*.8*
-
+%ifarch %{arm}
+%config %{_sysconfdir}/sysconfig/uboot
+%endif
 
 %changelog
+* Tue Feb 07 2012 Dennis Gilmore <dennis@ausil.us> - 8.8-3
+- add uboot-tools requires on arm arches
+- add uboot config file on arm arches
+
 * Fri Jan 13 2012 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 8.8-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_17_Mass_Rebuild
 
