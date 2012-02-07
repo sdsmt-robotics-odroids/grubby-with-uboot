@@ -58,7 +58,7 @@ rm -rf $RPM_BUILD_ROOT
 /sbin/grubby
 %{_mandir}/man8/*.8*
 %ifarch %{arm}
-%config %{_sysconfdir}/sysconfig/uboot
+%config(noreplace) %{_sysconfdir}/sysconfig/uboot
 %endif
 
 %changelog
