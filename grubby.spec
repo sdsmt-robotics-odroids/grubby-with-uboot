@@ -1,6 +1,6 @@
 Name: grubby
 Version: 8.8
-Release: 3%{?dist}
+Release: 4%{?dist}
 Summary: Command line tool for updating bootloader configs
 Group: System Environment/Base
 License: GPLv2+
@@ -20,6 +20,7 @@ Requires: s390utils-base
 %ifarch %{arm}
 Requires: uboot-tools
 %endif
+Patch0: grubby-8.8-add-armv5tel.patch
 
 %description
 grubby  is  a command line tool for updating and displaying information about 
@@ -30,6 +31,7 @@ environment.
 
 %prep
 %setup -q
+%patch0 -p1
 
 
 %build
@@ -62,6 +64,9 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Fri Mar 02 2012 Peter Jones <pjones@redhat.com> - 8.8-4
+- Add support for armv5tel.
+
 * Tue Feb 07 2012 Dennis Gilmore <dennis@ausil.us> - 8.8-3
 - add uboot-tools requires on arm arches
 - add uboot config file on arm arches
