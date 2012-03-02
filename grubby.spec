@@ -1,6 +1,6 @@
 Name: grubby
-Version: 8.8
-Release: 4%{?dist}
+Version: 8.9
+Release: 1%{?dist}
 Summary: Command line tool for updating bootloader configs
 Group: System Environment/Base
 License: GPLv2+
@@ -20,7 +20,6 @@ Requires: s390utils-base
 %ifarch %{arm}
 Requires: uboot-tools
 %endif
-Patch0: grubby-8.8-add-armv5tel.patch
 
 %description
 grubby  is  a command line tool for updating and displaying information about 
@@ -31,8 +30,6 @@ environment.
 
 %prep
 %setup -q
-%patch0 -p1
-
 
 %build
 make %{?_smp_mflags}
@@ -64,8 +61,17 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 %changelog
-* Fri Mar 02 2012 Peter Jones <pjones@redhat.com> - 8.8-4
-- Add support for armv5tel.
+* Fri Mar 02 2012 Peter Jones <pjones@redhat.com> - 8.9-1
+- Refactor grub2 title extraction, making it a function (Cleber Rosa)
+- Include prefix when printing kernel information (Cleber Rosa)
+- Implement support for "default saved" for grub2 (Cleber Rosa)
+- Try to display title when printing information with '--info' (Cleber Rosa)
+- new-kernel-pkg fails to find U-Boot. (D. Marlin)
+- Add support to new-kernel-pkg to recognize ARCH == armv5tel needed for Kir
+  (D.Marlin)
+- Include a / when one is missing in paths (#769641)
+- Fix hard coded paths so kernel's "make install" will DTRT.
+- Fix endswith() to correctly test its input for validity.
 
 * Tue Feb 07 2012 Dennis Gilmore <dennis@ausil.us> - 8.8-3
 - add uboot-tools requires on arm arches
