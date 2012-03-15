@@ -1,5 +1,5 @@
 Name: grubby
-Version: 8.9
+Version: 8.10
 Release: 1%{?dist}
 Summary: Command line tool for updating bootloader configs
 Group: System Environment/Base
@@ -61,6 +61,12 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Thu Mar 15 2012 Peter Jones <pjones@redhat.com> - 8.10-1
+- Update to 8.10
+- Use "isquote" where appropriate
+- Make --remove-kenrel support titles in grub2 (jianzhong.huang)
+- Use grub2 if it's there on ppc.
+
 * Fri Mar 02 2012 Peter Jones <pjones@redhat.com> - 8.9-1
 - Refactor grub2 title extraction, making it a function (Cleber Rosa)
 - Include prefix when printing kernel information (Cleber Rosa)
