@@ -1,5 +1,5 @@
 Name: grubby
-Version: 8.10
+Version: 8.11
 Release: 1%{?dist}
 Summary: Command line tool for updating bootloader configs
 Group: System Environment/Base
@@ -61,6 +61,10 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Wed Mar 21 2012 Peter Jones <pjones@redhat.com> - 8.11-1
+- Update to 8.11
+  Resolves: rhbz#805310
+
 * Thu Mar 15 2012 Peter Jones <pjones@redhat.com> - 8.10-1
 - Update to 8.10
 - Use "isquote" where appropriate
