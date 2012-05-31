@@ -1,5 +1,5 @@
 Name: grubby
-Version: 8.11
+Version: 8.12
 Release: 1%{?dist}
 Summary: Command line tool for updating bootloader configs
 Group: System Environment/Base
@@ -61,6 +61,14 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Thu May 31 2012 Peter Jones <pjones@redhat.com> - 8.12-1
+- Update to 8.12
+- Preserve trailing indentation when splitting line elements (mads)
+  Resolves: rhbz#742720
+- Pick last device mounted on / (pjones,bcl)
+  Related: rhbz#820340
+  Related: rhbz#820351
+
 * Wed Mar 21 2012 Peter Jones <pjones@redhat.com> - 8.11-1
 - Update to 8.11
   Resolves: rhbz#805310
