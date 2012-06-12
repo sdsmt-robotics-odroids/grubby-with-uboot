@@ -1,6 +1,6 @@
 Name: grubby
 Version: 8.12
-Release: 1%{?dist}
+Release: 2%{?dist}
 Summary: Command line tool for updating bootloader configs
 Group: System Environment/Base
 License: GPLv2+
@@ -11,7 +11,7 @@ URL: http://git.fedorahosted.org/git/grubby.git
 Source0: %{name}-%{version}.tar.bz2
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildRequires: pkgconfig glib2-devel popt-devel 
-BuildRequires: libblkid-devel
+BuildRequires: libblkid-devel git
 # for make test / getopt:
 BuildRequires: util-linux-ng
 %ifarch s390 s390x
@@ -20,6 +20,8 @@ Requires: s390utils-base
 %ifarch %{arm}
 Requires: uboot-tools
 %endif
+
+Patch0: 0001-Support-UBOOT_IMGADDR-override.patch
 
 %description
 grubby  is  a command line tool for updating and displaying information about 
@@ -30,6 +32,13 @@ environment.
 
 %prep
 %setup -q
+
+git init
+git config user.email "noone@example.com"
+git config user.name "no one"
+git add .
+git commit -a -q -m "%{version} baseline"
+git am %{patches} </dev/null
 
 %build
 make %{?_smp_mflags}
@@ -61,6 +70,9 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Tue Jun 12 2012 Peter Jones <pjones@redhat.com> - 8.12-2
+- Support UBOOT_IMGADDR override on ARM (blc)
+
 * Thu May 31 2012 Peter Jones <pjones@redhat.com> - 8.12-1
 - Update to 8.12
 - Preserve trailing indentation when splitting line elements (mads)
