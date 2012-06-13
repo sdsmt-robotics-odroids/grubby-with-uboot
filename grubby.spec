@@ -52,6 +52,8 @@ make install DESTDIR=$RPM_BUILD_ROOT mandir=%{_mandir}
 %ifarch %{arm}
 mkdir -p $RPM_BUILD_ROOT%{_sysconfdir}/sysconfig/
 install -p uboot $RPM_BUILD_ROOT%{_sysconfdir}/sysconfig/uboot
+mkdir -p $RPM_BUILD_ROOT/boot
+echo " " >> $RPM_BUILD_ROOT/boot/boot.scr
 %endif
 
 %clean
@@ -67,6 +69,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man8/*.8*
 %ifarch %{arm}
 %config(noreplace) %{_sysconfdir}/sysconfig/uboot
+%config(noreplace) /boot/boot.scr
 %endif
 
 %changelog
