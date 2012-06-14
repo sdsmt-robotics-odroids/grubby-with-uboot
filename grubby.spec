@@ -1,6 +1,6 @@
 Name: grubby
-Version: 8.12
-Release: 2%{?dist}
+Version: 8.13
+Release: 1%{?dist}
 Summary: Command line tool for updating bootloader configs
 Group: System Environment/Base
 License: GPLv2+
@@ -20,8 +20,6 @@ Requires: s390utils-base
 %ifarch %{arm}
 Requires: uboot-tools
 %endif
-
-Patch0: 0001-Support-UBOOT_IMGADDR-override.patch
 
 %description
 grubby  is  a command line tool for updating and displaying information about 
@@ -73,6 +71,11 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Thu Jun 14 2012 Peter Jones <pjones@redhat.com> - 8.13-1
+- Update to 8.13
+- Add some more ARM tweaks (dmartin)
+- Better support for other distros (crosa)
+
 * Tue Jun 12 2012 Peter Jones <pjones@redhat.com> - 8.12-2
 - Support UBOOT_IMGADDR override on ARM (blc)
 
