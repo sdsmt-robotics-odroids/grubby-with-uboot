@@ -1,5 +1,5 @@
 Name: grubby
-Version: 8.16
+Version: 8.17
 Release: 1%{?dist}
 Summary: Command line tool for updating bootloader configs
 Group: System Environment/Base
@@ -71,6 +71,10 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Wed Aug 08 2012 Peter Jones <pjones@redhat.com> - 8.17-1
+- Update to 8.17
+- Fixes a "make test" failure.
+
 * Wed Aug 08 2012 Peter Jones <pjones@redhat.com> - 8.16-1
 - Update to 8.16
 - Handle "linuxefi" directive on grub2/uefi machines.
