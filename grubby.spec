@@ -1,5 +1,5 @@
 Name: grubby
-Version: 8.17
+Version: 8.18
 Release: 1%{?dist}
 Summary: Command line tool for updating bootloader configs
 Group: System Environment/Base
@@ -71,6 +71,9 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Fri Sep 21 2012 Peter Jones <pjones@redhat.com> - 8.18-1
+- Change the way the kernel load address is determined for ARM U-Boot.
+
 * Wed Aug 08 2012 Peter Jones <pjones@redhat.com> - 8.17-1
 - Update to 8.17
 - Fixes a "make test" failure.
