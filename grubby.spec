@@ -1,5 +1,5 @@
 Name: grubby
-Version: 8.18
+Version: 8.19
 Release: 1%{?dist}
 Summary: Command line tool for updating bootloader configs
 Group: System Environment/Base
@@ -71,6 +71,10 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Wed Sep 26 2012 Peter Jones <pjones@redhat.com> - 8.19-1
+- Don't accidentally migrate from linuxefi back to linux
+  Resolves: rhbz#859285
+
 * Fri Sep 21 2012 Peter Jones <pjones@redhat.com> - 8.18-1
 - Change the way the kernel load address is determined for ARM U-Boot.
 
