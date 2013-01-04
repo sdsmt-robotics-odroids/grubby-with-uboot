@@ -1,5 +1,5 @@
 Name: grubby
-Version: 8.20
+Version: 8.21
 Release: 1%{?dist}
 Summary: Command line tool for updating bootloader configs
 Group: System Environment/Base
@@ -71,6 +71,15 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Fri Jan 04 2013 Peter Jones <pjones@redhat.com> - 8.21-1
+- Use systemd vconsole.conf and locale.conf if present
+  Resolves rhbz#881908
+- Avoid unnecessary stat calls (from Ville Skyttä)
+  Resolves rhbz#741135
+- Spelling fixes (Ville Skyttä)
+- Add a test case for rhbz#742885
+- Handle case-insensitive extlinux config files properly (from Johannes Weiner)
+
 * Tue Oct 02 2012 Peter Jones <pjones@redhat.com> - 8.20-1
 - Handle linuxefi initrd and removal correctly.
   Resolves: rhbz#859285
