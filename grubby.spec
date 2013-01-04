@@ -1,5 +1,5 @@
 Name: grubby
-Version: 8.21
+Version: 8.22
 Release: 1%{?dist}
 Summary: Command line tool for updating bootloader configs
 Group: System Environment/Base
@@ -71,6 +71,10 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Fri Jan 04 2013 Peter Jones <pjones@redhat.com> - 8.22-1
+- Revert test case for rhbz#742885 - it's a work in progress that isn't
+  ready yet.
+
 * Fri Jan 04 2013 Peter Jones <pjones@redhat.com> - 8.21-1
 - Use systemd vconsole.conf and locale.conf if present
   Resolves rhbz#881908
