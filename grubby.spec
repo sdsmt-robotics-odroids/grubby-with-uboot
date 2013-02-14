@@ -1,6 +1,6 @@
 Name: grubby
 Version: 8.22
-Release: 1%{?dist}
+Release: 2%{?dist}
 Summary: Command line tool for updating bootloader configs
 Group: System Environment/Base
 License: GPLv2+
@@ -71,6 +71,9 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Thu Feb 14 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 8.22-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_19_Mass_Rebuild
+
 * Fri Jan 04 2013 Peter Jones <pjones@redhat.com> - 8.22-1
 - Revert test case for rhbz#742885 - it's a work in progress that isn't
   ready yet.
