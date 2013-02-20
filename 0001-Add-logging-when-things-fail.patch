@@ -1,4 +1,4 @@
-From bfb7c70e7eaa1311cadc716c303ca694163f9e2f Mon Sep 17 00:00:00 2001
+From 996a6acca48ef1a0ba3100ea9ac8a0f07a94a65f Mon Sep 17 00:00:00 2001
 From: Peter Jones <pjones@redhat.com>
 Date: Tue, 19 Feb 2013 18:00:36 -0500
 Subject: [PATCH] Add logging when things fail.
@@ -8,11 +8,11 @@ Actually also logs when things succeed.
 Signed-off-by: Peter Jones <pjones@redhat.com>
 ---
  Makefile                |   2 +-
- grubby.c                |  92 ++++++++++++++++++++++++++++----------
- log.c                   | 114 ++++++++++++++++++++++++++++++++++++++++++++++++
- log.h                   |  27 ++++++++++++
+ grubby.c                |  92 +++++++++++++++++++++++++++----------
+ log.c                   | 118 ++++++++++++++++++++++++++++++++++++++++++++++++
+ log.h                   |  27 +++++++++++
  test/results/debug/g2.1 |   1 +
- 5 files changed, 212 insertions(+), 24 deletions(-)
+ 5 files changed, 216 insertions(+), 24 deletions(-)
  create mode 100644 log.c
  create mode 100644 log.h
 
@@ -249,10 +249,10 @@ index edbeb64..408e3ca 100644
  
 diff --git a/log.c b/log.c
 new file mode 100644
-index 0000000..1ddb8c1
+index 0000000..2bcfa40
 --- /dev/null
 +++ b/log.c
-@@ -0,0 +1,114 @@
+@@ -0,0 +1,118 @@
 +/*
 + * log.c
 + *
@@ -351,7 +351,11 @@ index 0000000..1ddb8c1
 +			return rc;
 +	}
 +
-+	vfprintf(log ? log : f, msg, ap);
++	va_list aq;
++	va_copy(aq, ap);
++
++	vfprintf(log ? log : f, msg, aq);
++	va_end(aq);
 +	fdatasync(log ? fileno(log) : log_fd);
 +
 +	return 0;
