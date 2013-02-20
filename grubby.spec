@@ -1,6 +1,6 @@
 Name: grubby
 Version: 8.22
-Release: 2%{?dist}
+Release: 3%{?dist}
 Summary: Command line tool for updating bootloader configs
 Group: System Environment/Base
 License: GPLv2+
@@ -20,6 +20,8 @@ Requires: s390utils-base
 %ifarch %{arm}
 Requires: uboot-tools
 %endif
+
+Patch0: 0001-Add-logging-when-things-fail.patch
 
 %description
 grubby  is  a command line tool for updating and displaying information about 
@@ -71,6 +73,9 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Wed Feb 20 2013 Peter Jones <pjones@redhat.com> - 8.22-3
+- Add --debug style logging (for both success and failures) to /var/log/grubby
+
 * Thu Feb 14 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 8.22-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_19_Mass_Rebuild
 
