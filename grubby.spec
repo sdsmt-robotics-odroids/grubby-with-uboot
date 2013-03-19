@@ -1,5 +1,5 @@
 Name: grubby
-Version: 8.23
+Version: 8.24
 Release: 1%{?dist}
 Summary: Command line tool for updating bootloader configs
 Group: System Environment/Base
@@ -71,6 +71,9 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Tue Mar 19 2013 Peter Jones <pjones@redhat.com> - 8.24-1
+- Fix module remove code from Harald (#923441)
+
 * Mon Mar 11 2013 Peter Jones <pjones@redhat.com> - 8.23-1
 - Update to 8.23
 - Fix empty root device in case of an empty /etc/fstab (lemenkov)
