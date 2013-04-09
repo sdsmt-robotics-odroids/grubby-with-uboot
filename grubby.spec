@@ -1,5 +1,5 @@
 Name: grubby
-Version: 8.24
+Version: 8.25
 Release: 1%{?dist}
 Summary: Command line tool for updating bootloader configs
 Group: System Environment/Base
@@ -71,6 +71,11 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Tue Apr 09 2013 Peter Jones <pjones@redhat.com> - 8.25-1
+- Error instead of segfaulting if we can't find any working config
+  Resolves: rhbz#912873
+  Resolves: rhbz#751608
+
 * Tue Mar 19 2013 Peter Jones <pjones@redhat.com> - 8.24-1
 - Fix module remove code from Harald (#923441)
 
