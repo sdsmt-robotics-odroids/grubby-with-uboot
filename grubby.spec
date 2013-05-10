@@ -1,5 +1,5 @@
 Name: grubby
-Version: 8.25
+Version: 8.26
 Release: 1%{?dist}
 Summary: Command line tool for updating bootloader configs
 Group: System Environment/Base
@@ -71,6 +71,10 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Fri May 10 2013 Peter Jones <pjones@redhat.com> - 8.26-1
+- Conditionally call arm-boot-config's boot.scr generator if available
+  Resolves: rhbz#952428
+
 * Tue Apr 09 2013 Peter Jones <pjones@redhat.com> - 8.25-1
 - Error instead of segfaulting if we can't find any working config
   Resolves: rhbz#912873
