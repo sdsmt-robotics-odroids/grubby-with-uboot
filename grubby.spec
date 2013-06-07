@@ -1,6 +1,6 @@
 Name: grubby
 Version: 8.26
-Release: 1%{?dist}
+Release: 2%{?dist}
 Summary: Command line tool for updating bootloader configs
 Group: System Environment/Base
 License: GPLv2+
@@ -9,6 +9,7 @@ URL: http://git.fedorahosted.org/git/grubby.git
 # git clone git://git.fedorahosted.org/git/grubby.git
 # git archive --format=tar --prefix=grubby-%{version}/ HEAD |bzip2 > grubby-%{version}.tar.bz2
 Source0: %{name}-%{version}.tar.bz2
+Patch0:  0001-update-extlinux.conf-on-arm-arches-if-it-exists.patch
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildRequires: pkgconfig glib2-devel popt-devel 
 BuildRequires: libblkid-devel git
@@ -71,6 +72,9 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Fri Jun 07 2013 Dennis Gilmore <dennis@ausil.us> - 8.26-2
+- add patch to update extlinux.conf file on arm if it exists
+
 * Fri May 10 2013 Peter Jones <pjones@redhat.com> - 8.26-1
 - Conditionally call arm-boot-config's boot.scr generator if available
   Resolves: rhbz#952428
