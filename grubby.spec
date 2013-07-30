@@ -1,6 +1,6 @@
 Name: grubby
-Version: 8.26
-Release: 2%{?dist}
+Version: 8.27
+Release: 1%{?dist}
 Summary: Command line tool for updating bootloader configs
 Group: System Environment/Base
 License: GPLv2+
@@ -72,6 +72,11 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Tue Jul 30 2013 Peter Jones <pjones@redhat.com> - 8.27-2
+- Make grubby understand grub's "saved_entry" system
+  Resolves: rhbz#768106
+  Resolves: rhbz#736188
+
 * Fri Jun 07 2013 Dennis Gilmore <dennis@ausil.us> - 8.26-2
 - add patch to update extlinux.conf file on arm if it exists
 
