@@ -16,7 +16,7 @@ BuildRequires: pkgconfig glib2-devel popt-devel
 BuildRequires: libblkid-devel git
 # for make test / getopt:
 BuildRequires: util-linux-ng
-%ifarch i686 x86_64 ppc ppc64
+%ifarch aarch64 i686 x86_64 ppc ppc64
 BuildRequires: grub2
 %endif
 %ifarch s390 s390x
