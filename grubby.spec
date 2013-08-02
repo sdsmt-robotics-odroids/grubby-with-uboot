@@ -1,5 +1,5 @@
 Name: grubby
-Version: 8.27
+Version: 8.28
 Release: 1%{?dist}
 Summary: Command line tool for updating bootloader configs
 Group: System Environment/Base
@@ -9,15 +9,14 @@ URL: http://git.fedorahosted.org/git/grubby.git
 # git clone git://git.fedorahosted.org/git/grubby.git
 # git archive --format=tar --prefix=grubby-%{version}/ HEAD |bzip2 > grubby-%{version}.tar.bz2
 Source0: %{name}-%{version}.tar.bz2
-Patch0:	0001-update-extlinux.conf-on-arm-arches-if-it-exists.patch
-Patch1:	0001-Only-run-the-grub2-test-suite-on-architectures-where.patch
+
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildRequires: pkgconfig glib2-devel popt-devel 
 BuildRequires: libblkid-devel git
 # for make test / getopt:
 BuildRequires: util-linux-ng
 %ifarch aarch64 i686 x86_64 ppc ppc64
-BuildRequires: grub2
+BuildRequires: /usr/bin/grub2-editenv
 %endif
 %ifarch s390 s390x
 Requires: s390utils-base
@@ -76,6 +75,11 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Fri Aug 02 2013 Peter Jones <pjones@redhat.com> - 8.28-1
+- More work on grub's "saved_entry" system. 
+  Resolves: rhbz#768106
+  Resolves: rhbz#736188
+
 * Tue Jul 30 2013 Peter Jones <pjones@redhat.com> - 8.27-1
 - Make grubby understand grub's "saved_entry" system
   Resolves: rhbz#768106
