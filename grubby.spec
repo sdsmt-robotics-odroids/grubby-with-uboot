@@ -1,6 +1,6 @@
 Name: grubby
-Version: 8.28
-Release: 2%{?dist}
+Version: 8.31
+Release: 1%{?dist}
 Summary: Command line tool for updating bootloader configs
 Group: System Environment/Base
 License: GPLv2+
@@ -9,15 +9,6 @@ URL: http://git.fedorahosted.org/git/grubby.git
 # git clone git://git.fedorahosted.org/git/grubby.git
 # git archive --format=tar --prefix=grubby-%{version}/ HEAD |bzip2 > grubby-%{version}.tar.bz2
 Source0: %{name}-%{version}.tar.bz2
-
-# https://lists.fedorahosted.org/pipermail/anaconda-patches/2013-November/007524.html
-Patch0: 0001-extlinux-Understand-default-properly.patch
-# https://lists.fedorahosted.org/pipermail/anaconda-patches/2013-November/007525.html
-Patch1: 0002-extlinux-Add-test-suite.patch
-# https://lists.fedorahosted.org/pipermail/anaconda-patches/2013-November/007522.html
-Patch2: 0003-grub-Fix-a-crash-with-kernel-line-without-being-prec.patch
-# https://lists.fedorahosted.org/pipermail/anaconda-patches/2013-November/007523.html
-Patch3: 0004-grub-Remove-a-redundant-test.patch
 
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildRequires: pkgconfig glib2-devel popt-devel 
@@ -84,6 +75,10 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Fri Mar 28 2014 Peter Jones <pjones@redhat.com> - 8.31-1
+- Update to 8.31
+- Fold in patches from Fedora and RHEL 7 trees
+
 * Mon Jan 20 2014 Lubomir Rintel <lkundrak@v3.sk> - 8.28-2
 - Fix extlinux default
 
