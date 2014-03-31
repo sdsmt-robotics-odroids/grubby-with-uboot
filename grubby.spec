@@ -1,5 +1,5 @@
 Name: grubby
-Version: 8.31
+Version: 8.32
 Release: 1%{?dist}
 Summary: Command line tool for updating bootloader configs
 Group: System Environment/Base
@@ -75,6 +75,10 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Mon Mar 31 2014 Peter Jones <pjones@redhat.com> - 8.32-1
+- Fix --devtree test in new-kernel-pkg (#1082318)
+- Fix aarch64 #define test.
+
 * Fri Mar 28 2014 Peter Jones <pjones@redhat.com> - 8.31-1
 - Update to 8.31
 - Fold in patches from Fedora and RHEL 7 trees
