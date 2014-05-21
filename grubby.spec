@@ -1,5 +1,5 @@
 Name: grubby
-Version: 8.34
+Version: 8.35
 Release: 1%{?dist}
 Summary: Command line tool for updating bootloader configs
 Group: System Environment/Base
@@ -75,6 +75,10 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Wed May 21 2014 Peter Jones <pjones@redhat.com> - 8.35-1
+- Fix a minor test case error that causes koji builds to fail.
+  Related: rhbz#1096358
+
 * Wed May 21 2014 Peter Jones <pjones@redhat.com> - 8.34-1
 - Make grub2 "--copy-default --add-kernel=foo --initrd=bar" work when default
   has no initrd line.
