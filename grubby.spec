@@ -1,5 +1,5 @@
 Name: grubby
-Version: 8.33
+Version: 8.34
 Release: 1%{?dist}
 Summary: Command line tool for updating bootloader configs
 Group: System Environment/Base
@@ -75,6 +75,12 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Wed May 21 2014 Peter Jones <pjones@redhat.com> - 8.34-1
+- Make grub2 "--copy-default --add-kernel=foo --initrd=bar" work when default
+  has no initrd line.
+  Resolves: rhbz#1099627
+  Related: rhbz#1096358
+
 * Tue Apr 01 2014 Peter Jones <pjones@redhat.com> - 8.33-1
 - Fix --devtree test in new-kernel-pkg even harder (#1082318)
 
