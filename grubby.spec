@@ -1,6 +1,6 @@
 Name: grubby
 Version: 8.35
-Release: 1%{?dist}
+Release: 2%{?dist}
 Summary: Command line tool for updating bootloader configs
 Group: System Environment/Base
 License: GPLv2+
@@ -75,6 +75,9 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Sat Jun 07 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 8.35-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_21_Mass_Rebuild
+
 * Wed May 21 2014 Peter Jones <pjones@redhat.com> - 8.35-1
 - Fix a minor test case error that causes koji builds to fail.
   Related: rhbz#1096358
