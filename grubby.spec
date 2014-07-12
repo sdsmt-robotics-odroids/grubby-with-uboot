@@ -1,6 +1,6 @@
 Name: grubby
 Version: 8.35
-Release: 2%{?dist}
+Release: 3%{?dist}
 Summary: Command line tool for updating bootloader configs
 Group: System Environment/Base
 License: GPLv2+
@@ -64,7 +64,8 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(-,root,root,-)
-%doc COPYING
+%{!?_licensedir:%global license %%doc}
+%license COPYING
 /sbin/installkernel
 /sbin/new-kernel-pkg
 /sbin/grubby
@@ -75,6 +76,9 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Sat Jul 12 2014 Tom Callaway <spot@fedoraproject.org> - 8.35-3
+- fix license handling
+
 * Sat Jun 07 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 8.35-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_21_Mass_Rebuild
 
