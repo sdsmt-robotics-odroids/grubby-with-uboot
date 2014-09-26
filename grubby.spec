@@ -1,6 +1,6 @@
 Name: grubby
 Version: 8.35
-Release: 4%{?dist}
+Release: 5%{?dist}
 Summary: Command line tool for updating bootloader configs
 Group: System Environment/Base
 License: GPLv2+
@@ -9,6 +9,15 @@ URL: http://git.fedorahosted.org/git/grubby.git
 # git clone git://git.fedorahosted.org/git/grubby.git
 # git archive --format=tar --prefix=grubby-%{version}/ HEAD |bzip2 > grubby-%{version}.tar.bz2
 Source0: %{name}-%{version}.tar.bz2
+Patch0001: 0001-Don-t-go-past-the-last-element-of-indexVars-in-findE.patch
+Patch0002: 0002-Add-bls-test-harness-bits.patch
+Patch0003: 0003-grubby-fix-initrd-updating-when-multiboot-exist.patch
+Patch0004: 0004-Tell-a-slightly-better-fib-about-default-bootloader-.patch
+Patch0005: 0005-Make-findTemplate-actually-return-the-saved-default.patch
+Patch0006: 0006-Support-filtering-update-kernel-by-title-as-well.patch
+Patch0007: 0007-Conditionally-create-debug-entries-when-installing-k.patch
+Patch0008: 0008-Revert-Add-bls-test-harness-bits.patch
+Patch0009: 0009-Always-error-check-getLineByType.patch
 
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildRequires: pkgconfig glib2-devel popt-devel 
@@ -41,6 +50,8 @@ git config user.name "no one"
 git add .
 git commit -a -q -m "%{version} baseline"
 git am %{patches} </dev/null
+grub config --unset user.email
+grub config --unset user.name
 
 %build
 make %{?_smp_mflags}
@@ -76,6 +87,11 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Fri Sep 26 2014 Peter Jones <pjones@redhat.com> - 8.35-5
+- See if what people are seeing in 1141414 is actually 957681
+  Related: rhbz#957681
+  Related: rhbz#1141414
+
 * Sat Aug 16 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 8.35-4
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_21_22_Mass_Rebuild
 
