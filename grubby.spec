@@ -50,8 +50,8 @@ git config user.name "no one"
 git add .
 git commit -a -q -m "%{version} baseline"
 git am %{patches} </dev/null
-grub config --unset user.email
-grub config --unset user.name
+git config --unset user.email
+git config --unset user.name
 
 %build
 make %{?_smp_mflags}
