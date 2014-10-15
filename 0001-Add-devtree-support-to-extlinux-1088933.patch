@@ -1,0 +1,172 @@
+From aa7af717b8855bcfb9a95b80931b8ff319112b88 Mon Sep 17 00:00:00 2001
+From: Dennis Gilmore <dennis@ausil.us>
+Date: Fri, 10 Oct 2014 02:06:52 -0500
+Subject: [PATCH 1/3] Add --devtree support to extlinux (#1088933)
+
+On 32 bit arm it needs the path to the dtb. This adds support for the
+fdt command to the extlinux handling. If --devtree /path/to/dtb/file.dtb
+is passed grubby will add or updated it.
+---
+ grubby.c                     |  1 +
+ new-kernel-pkg               | 23 ++++++++++++++++++++---
+ test.sh                      |  5 +++++
+ test/extlinux.5              | 21 +++++++++++++++++++++
+ test/results/add/extlinux5.1 | 21 +++++++++++++++++++++
+ 5 files changed, 68 insertions(+), 3 deletions(-)
+ create mode 100644 test/extlinux.5
+ create mode 100644 test/results/add/extlinux5.1
+
+diff --git a/grubby.c b/grubby.c
+index 27b4547..bbe54b6 100644
+--- a/grubby.c
++++ b/grubby.c
+@@ -581,6 +581,7 @@ struct keywordTypes extlinuxKeywords[] = {
+     { "initrd",	    LT_INITRD,      ' ',	',' },
+     { "append",	    LT_KERNELARGS,  ' ' },
+     { "prompt",     LT_UNKNOWN,     ' ' },
++    { "fdt",        LT_DEVTREE,     ' ' },
+     { NULL,	    0, 0 },
+ };
+ int useextlinuxmenu;
+diff --git a/new-kernel-pkg b/new-kernel-pkg
+index 70f6118..9784f2b 100755
+--- a/new-kernel-pkg
++++ b/new-kernel-pkg
+@@ -7,7 +7,7 @@
+ # run of depmod/removal of depmod generated files
+ # addition/removal of kernel images from grub/lilo configuration (via grubby)
+ #
+-# Copyright 2002-2008 Red Hat, Inc.  All rights reserved.
++# Copyright 2002-2014 Red Hat, Inc.  All rights reserved.
+ #
+ # This program is free software; you can redistribute it and/or modify
+ # it under the terms of the GNU General Public License as published by
+@@ -113,6 +113,7 @@ dracut=""
+ dracuthostonly=""
+ initrdfile=""
+ devtreefile=""
++devtreedir=""
+ moddep=""
+ verbose=""
+ makedefault=""
+@@ -296,7 +297,7 @@ install() {
+ 	[ -n "$verbose" ] && echo "adding $version to $extlinuxConfig"
+ 
+ 	ARGS="--extlinux -c $extlinuxConfig --add-kernel=$kernelImage \
+-	    $INITRD --copy-default --title \"$title\$debugtitle\" \
++	    $DEVTREE $INITRD --copy-default --title \"$title\$debugtitle\" \
+ 	    ${mbkernel:+--add-multiboot=\"$mbkernel\"} \
+ 	    ${mbargs:+--mbargs=\"$mbargs\"} \
+ 	    --args=\"root=$rootdevice $kernargs \$debugargs\" \
+@@ -449,6 +450,12 @@ update() {
+ 	fi
+     fi
+ 
++    DEVTREE=""
++    if [ "x$devtreefile" != "x" -a -f "$devtreefile" ]; then
++        [ -n "$verbose" ] && echo "found $devtreefile and using it with grubby"
++        DEVTREE="--devtree $devtreefile"
++    fi
++
+     if [ -n "$cfgGrub" ]; then
+ 	[ -n "$verbose" ] && echo "updating $version from $grubConfig"
+ 	ARGS="--grub -c $grubConfig --update-kernel=$kernelImage $INITRD \
+@@ -544,7 +551,7 @@ update() {
+     if [ -n "$cfgExtlinux" ]; then
+ 	[ -n "$verbose" ] && echo "updating $version from $extlinuxConfig"
+ 	ARGS="--extlinux -c $extlinuxConfig --update-kernel=$kernelImage \
+-		$INITRD ${kernargs:+--args=\"$kernargs\"} \
++		$DEVTREE $INITRD ${kernargs:+--args=\"$kernargs\"} \
+ 		${removeargs:+--remove-args=\"$removeargs\"} \
+ 		--title=\"$title\$debugtitle\""
+ 
+@@ -772,6 +779,16 @@ if [ -z "$initrdfile" ]; then
+ fi
+ [ -n "$verbose" ] && echo "initrdfile is $initrdfile"
+ 
++if [[ ${ARCH} =~ armv[5|7].*l ]]; then
++  if [ -d "$bootPrefix/dtb-$version/" ]; then
++    devtreedir="$bootPrefix/dtb-$version/"
++    if [ -n "$dtbfile" -a -f "$devtreedir/$dtbfile" ]; then
++      devtreefile="$devtreedir/$dtbfile"
++    fi
++  fi
++fi
++[ -n "$verbose" ] && echo "devtreedir is $devtreedir"
++
+ # add dracut i18n, keyboard and plymouth kernel args if requested
+ if [ -n "$dracut" -o -n "$adddracutargs" ]; then
+     if [ -r /etc/vconsole.conf ]; then
+diff --git a/test.sh b/test.sh
+index 864a8ce..67b932d 100755
+--- a/test.sh
++++ b/test.sh
+@@ -647,6 +647,11 @@ extlinuxTest extlinux.2 add/extlinux2.1 --add-kernel=/boot/vmlinuz-3.12.0-2.fc21
+     --initrd=/boot/initrd-3.12.0-2.fc21.i686-new.img --boot-filesystem=/boot --copy-default \
+     --title="Fedora (3.12.0-2.fc21.i686) 20 (Heisenbug)"					    \
+     --remove-kernel="TITLE=Fedora (3.12.0-2.fc21.i686) 20 (Heisenbug)"
++extlinuxTest extlinux.5 add/extlinux5.1 --add-kernel=/boot/vmlinuz-3.15.0-0.rc1.git4.1.fc21.armv7hl \
++    --devtree='/boot/dtb-3.15.0-0.rc1.git4.1.fc21.armv7hl/imx6q-cubox-i.dtb' \
++    --initrd=/boot/initramfs-3.15.0-0.rc1.git4.1.fc21.armv7hl.img --boot-filesystem=/boot --copy-default \
++    --title="Fedora (3.15.0-0.rc1.git4.1.fc21.armv7hl) 21 (Rawhide)" \
++    --remove-kernel="TITLE=Fedora (3.12.0-0.fc21.armv7hl) 21 (Rawhide)"
+ 
+ testing="LILO long titles"
+ liloTest lilo.1 longtitle/l1.1 --add-kernel=/boot/new-kernel.img \
+diff --git a/test/extlinux.5 b/test/extlinux.5
+new file mode 100644
+index 0000000..30e7572
+--- /dev/null
++++ b/test/extlinux.5
+@@ -0,0 +1,21 @@
++ui menu.c32
++
++menu hidden
++timeout 50
++totaltimeout 9000
++
++prompt 10
++default Fedora (3.12.0-0.fc21.armv7hl) 21 (Rawhide)
++
++label Fedora (3.15.0-0.rc1.git0.1.fc21.armv7hl) 21 (Rawhide)
++kernel /vmlinuz-3.15.0-0.rc1.git0.1.fc21.armv7hl
++fdt    /dtb-3.15.0-0.rc1.git0.1.fc21.armv7hl/imx6q-cubox-i.dtb
++append console=ttymxc0,115200 root=UUID=7ee85ed8-de4a-4779-8658-2daed0d35e97 ro rhgb quiet LANG=en_US.UTF-8
++initrd /initramfs-3.15.0-0.rc1.git0.1.fc21.armv7hl.img
++
++label Fedora (3.12.0-0.fc21.armv7hl) 21 (Rawhide)
++kernel /vmlinuz-3.12.0-0.fc21.armv7hl
++fdt    /dtb-3.12.0-0.fc21.armv7hl/imx6q-cubox-i.dtb
++append console=ttymxc0,115200 root=UUID=7ee85ed8-de4a-4779-8658-2daed0d35e97 ro rhgb quiet LANG=en_US.UTF-8
++initrd /initramfs-3.12.0-0.fc21.armv7hl.img
++
+diff --git a/test/results/add/extlinux5.1 b/test/results/add/extlinux5.1
+new file mode 100644
+index 0000000..5e97883
+--- /dev/null
++++ b/test/results/add/extlinux5.1
+@@ -0,0 +1,21 @@
++ui menu.c32
++
++menu hidden
++timeout 50
++totaltimeout 9000
++
++prompt 10
++default Fedora (3.15.0-0.rc1.git4.1.fc21.armv7hl) 21 (Rawhide)
++
++label Fedora (3.15.0-0.rc1.git4.1.fc21.armv7hl) 21 (Rawhide)
++kernel /vmlinuz-3.15.0-0.rc1.git4.1.fc21.armv7hl
++fdt    /dtb-3.15.0-0.rc1.git4.1.fc21.armv7hl/imx6q-cubox-i.dtb
++append console=ttymxc0,115200 root=UUID=7ee85ed8-de4a-4779-8658-2daed0d35e97 ro rhgb quiet LANG=en_US.UTF-8
++initrd /initramfs-3.15.0-0.rc1.git4.1.fc21.armv7hl.img
++
++label Fedora (3.15.0-0.rc1.git0.1.fc21.armv7hl) 21 (Rawhide)
++kernel /vmlinuz-3.15.0-0.rc1.git0.1.fc21.armv7hl
++fdt    /dtb-3.15.0-0.rc1.git0.1.fc21.armv7hl/imx6q-cubox-i.dtb
++append console=ttymxc0,115200 root=UUID=7ee85ed8-de4a-4779-8658-2daed0d35e97 ro rhgb quiet LANG=en_US.UTF-8
++initrd /initramfs-3.15.0-0.rc1.git0.1.fc21.armv7hl.img
++
+-- 
+2.1.0
+

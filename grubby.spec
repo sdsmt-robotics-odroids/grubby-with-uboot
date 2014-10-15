@@ -1,6 +1,6 @@
 Name: grubby
 Version: 8.35
-Release: 5%{?dist}
+Release: 6%{?dist}
 Summary: Command line tool for updating bootloader configs
 Group: System Environment/Base
 License: GPLv2+
@@ -18,6 +18,9 @@ Patch0006: 0006-Support-filtering-update-kernel-by-title-as-well.patch
 Patch0007: 0007-Conditionally-create-debug-entries-when-installing-k.patch
 Patch0008: 0008-Revert-Add-bls-test-harness-bits.patch
 Patch0009: 0009-Always-error-check-getLineByType.patch
+Patch0010: 0001-Add-devtree-support-to-extlinux-1088933.patch
+Patch0011: 0002-add-support-for-devicetree-directories-for-use-on-ar.patch
+Patch0012: 0003-cleanup-dtb-handling-to-work-in-the-supported-usecas.patch
 
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildRequires: pkgconfig glib2-devel popt-devel 
@@ -87,6 +90,10 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Wed Oct 15 2014 Peter Jones <pjones@redhat.com> - 8.35-6
+- Update grubby to support device tree options for arm.  Again.
+  Resolves: rhbz#1088933
+
 * Fri Sep 26 2014 Peter Jones <pjones@redhat.com> - 8.35-5
 - See if what people are seeing in 1141414 is actually 957681
   Related: rhbz#957681
