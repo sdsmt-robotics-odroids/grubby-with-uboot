@@ -1,7 +1,7 @@
-From 2f35781fde88a99dec22407057b1a46343bc00cc Mon Sep 17 00:00:00 2001
+From e91855ce14df65d12f681c15dfba5b22a2b4a061 Mon Sep 17 00:00:00 2001
 From: Junxiao Bi <junxiao.bi@oracle.com>
 Date: Wed, 14 May 2014 16:44:21 +0800
-Subject: [PATCH 3/9] grubby: fix initrd updating when multiboot exist
+Subject: [PATCH 03/10] grubby: fix initrd updating when multiboot exist
 
 When using the following command to add an initrd for the kernel.
 grubby --update-kernel=/boot/vmlinuz-2.6.32-431.17.1.el6.x86_64.debug

@@ -1,7 +1,7 @@
-From 595f8d2d3681d684dbb12eff32bf1a68636db977 Mon Sep 17 00:00:00 2001
+From 354c873f633db124d214da8a1258e32fe210c7cb Mon Sep 17 00:00:00 2001
 From: Dennis Gilmore <dennis@ausil.us>
 Date: Thu, 9 Oct 2014 01:42:03 -0500
-Subject: [PATCH 3/3] cleanup dtb handling to work in the supported usecases
+Subject: [PATCH 10/10] cleanup dtb handling to work in the supported usecases
 
 add SHIPSDTB variable in the uboot defaults file that needs to be set to yes for
 platforms like the calxeda highbank that ship a dtb in u-boot that we want to use.
@@ -13,26 +13,26 @@ with an fdt entry otherwise update a fdtdir entry unless SHIPSDTB is set to yes.
  2 files changed, 12 insertions(+), 5 deletions(-)
 
 diff --git a/new-kernel-pkg b/new-kernel-pkg
-index 8d55abf..e02f65c 100755
+index 31976a7..311deda 100755
 --- a/new-kernel-pkg
 +++ b/new-kernel-pkg
-@@ -801,14 +801,16 @@ fi
+@@ -752,14 +752,16 @@ fi
  [ -n "$verbose" ] && echo "initrdfile is $initrdfile"
  
  if [[ ${ARCH} =~ armv[5|7].*l ]]; then
--  if [ -d "$bootPrefix/dtb-$version/" ]; then
--    devtreedir="$bootPrefix/dtb-$version/"
--    if [ -n "$dtbfile" -a -f "$devtreedir/$dtbfile" ]; then
--      devtreefile="$devtreedir/$dtbfile"
-+  if [ -z "$SHIPSDTB" -o "$SHIPSDTB" != "yes" ]; then
-+    if [ -n "$dtbfile" -a -f "$bootPrefix/dtb-$version/$dtbfile" ]; then
-+      devtreefile="$bootPrefix/dtb-$version/$dtbfile"
-+      [ -n "$verbose" ] && echo "devtreefile is $devtreefile"
-+    elif [ -d "$bootPrefix/dtb-$version/" ]; then
-+      devtreedir="$bootPrefix/dtb-$version/"
-+      [ -n "$verbose" ] && echo "devtreedir is $devtreedir"
+-    if [ -d "$bootPrefix/dtb-$version/" ]; then
+-	devtreedir="$bootPrefix/dtb-$version/"
+-	if [ -n "$dtbfile" -a -f "$devtreedir/$dtbfile" ]; then
+-	    devtreefile="$devtreedir/$dtbfile"
++    if [ -z "$SHIPSDTB" -o "$SHIPSDTB" != "yes" ]; then
++	if [ -n "$dtbfile" -a -f "$bootPrefix/dtb-$version/$dtbfile" ]; then
++	    devtreefile="$bootPrefix/dtb-$version/$dtbfile"
++	    [ -n "$verbose" ] && echo "devtreefile is $devtreefile"
++	elif [ -d "$bootPrefix/dtb-$version/" ]; then
++	    devtreedir="$bootPrefix/dtb-$version/"
++	    [ -n "$verbose" ] && echo "devtreedir is $devtreedir"
+ 	fi
      fi
-   fi
  fi
 -[ -n "$verbose" ] && echo "devtreedir is $devtreedir"
  
@@ -52,5 +52,5 @@ index aa663ad..07d8671 100644
 +# option to tell new-kernel-pkg a specific dtb file to load in extlinux.conf
 +#dtbfile=foo.dtb
 -- 
-2.1.0
+1.9.3
 

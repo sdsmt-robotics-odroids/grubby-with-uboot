@@ -1,7 +1,7 @@
-From 98cab84501f86bd98f12653c11f4ecc632139399 Mon Sep 17 00:00:00 2001
+From 0e5c50b8dff5208b915391e3b592790bdf174cf4 Mon Sep 17 00:00:00 2001
 From: Peter Jones <pjones@redhat.com>
 Date: Tue, 8 Jul 2014 14:37:21 -0400
-Subject: [PATCH 2/9] Add bls test harness bits.
+Subject: [PATCH 02/10] Add bls test harness bits.
 
 This expects that there are bls config files and that grubby knows how
 to deal with them, which isn't at all true, and so the test case
@@ -153,7 +153,7 @@ index 864a8ce..e7be15f 100755
      grub2DisplayTest grub2.2 defaultindex/0 --default-index
 diff --git a/test/grub2-support_files/6a9857a393724b7a981ebb5b8495b9ea-3.8.0-2.fc19.x86_64.conf b/test/grub2-support_files/6a9857a393724b7a981ebb5b8495b9ea-3.8.0-2.fc19.x86_64.conf
 new file mode 100644
-index 0000000..e36a1fd
+index 0000000..84b2bdf
 --- /dev/null
 +++ b/test/grub2-support_files/6a9857a393724b7a981ebb5b8495b9ea-3.8.0-2.fc19.x86_64.conf
 @@ -0,0 +1,8 @@
@@ -167,7 +167,7 @@ index 0000000..e36a1fd
 +initrd     /boot/initrd-3.8.0-2.fc19.x86_64
 diff --git a/test/grub2-support_files/6a9857a393724b7a981ebb5b8495b9ea-3.8.1-2.fc19.x86_64.conf b/test/grub2-support_files/6a9857a393724b7a981ebb5b8495b9ea-3.8.1-2.fc19.x86_64.conf
 new file mode 100644
-index 0000000..382d1af
+index 0000000..e1c61a8
 --- /dev/null
 +++ b/test/grub2-support_files/6a9857a393724b7a981ebb5b8495b9ea-3.8.1-2.fc19.x86_64.conf
 @@ -0,0 +1,8 @@
@@ -181,7 +181,7 @@ index 0000000..382d1af
 +initrd     /boot/initrd-3.8.1-2.fc19.x86_64
 diff --git a/test/grub2-support_files/6a9857a393724b7a981ebb5b8495b9ea-tboot-3.8.0-2.fc19.x86_64.conf b/test/grub2-support_files/6a9857a393724b7a981ebb5b8495b9ea-tboot-3.8.0-2.fc19.x86_64.conf
 new file mode 100644
-index 0000000..05c0910
+index 0000000..4a60fbc
 --- /dev/null
 +++ b/test/grub2-support_files/6a9857a393724b7a981ebb5b8495b9ea-tboot-3.8.0-2.fc19.x86_64.conf
 @@ -0,0 +1,10 @@
@@ -197,7 +197,7 @@ index 0000000..05c0910
 +initrd     /boot/initrd-3.8.0-2.fc19.x86_64
 diff --git a/test/grub2-support_files/6a9857a393724b7a981ebb5b8495b9ea-tboot-3.8.1-2.fc19.x86_64.conf b/test/grub2-support_files/6a9857a393724b7a981ebb5b8495b9ea-tboot-3.8.1-2.fc19.x86_64.conf
 new file mode 100644
-index 0000000..db17a93
+index 0000000..34c0e09
 --- /dev/null
 +++ b/test/grub2-support_files/6a9857a393724b7a981ebb5b8495b9ea-tboot-3.8.1-2.fc19.x86_64.conf
 @@ -0,0 +1,10 @@

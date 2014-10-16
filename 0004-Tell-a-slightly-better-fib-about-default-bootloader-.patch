@@ -1,7 +1,7 @@
-From 338b08cb67a369069475f327b0fce74b506e5c46 Mon Sep 17 00:00:00 2001
+From dbd5b06ce590ca638e3c44746183f6f2379e820f Mon Sep 17 00:00:00 2001
 From: Peter Jones <pjones@redhat.com>
 Date: Fri, 12 Sep 2014 15:50:05 -0400
-Subject: [PATCH 4/9] Tell a slightly better fib about default bootloader
+Subject: [PATCH 04/10] Tell a slightly better fib about default bootloader
  config paths.
 
 It's not going to be right everywhere, but... whatever.

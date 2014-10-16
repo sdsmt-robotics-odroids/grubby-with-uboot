@@ -1,7 +1,7 @@
-From 4b927a16d3a1a8356f4ceb78c7388ca3cb6a5d87 Mon Sep 17 00:00:00 2001
+From 0950d2e8693339a36f59c966dc8558263331665c Mon Sep 17 00:00:00 2001
 From: Peter Jones <pjones@redhat.com>
 Date: Mon, 15 Sep 2014 16:49:26 -0400
-Subject: [PATCH 8/9] Revert "Add bls test harness bits."
+Subject: [PATCH 06/10] Revert "Add bls test harness bits."
 
 This wasn't supposed to be pushed to master yet.  woops.
 
@@ -147,7 +147,7 @@ index e7be15f..864a8ce 100755
      grub2DisplayTest grub2.2 defaultindex/0 --default-index
 diff --git a/test/grub2-support_files/6a9857a393724b7a981ebb5b8495b9ea-3.8.0-2.fc19.x86_64.conf b/test/grub2-support_files/6a9857a393724b7a981ebb5b8495b9ea-3.8.0-2.fc19.x86_64.conf
 deleted file mode 100644
-index e36a1fd..0000000
+index 84b2bdf..0000000
 --- a/test/grub2-support_files/6a9857a393724b7a981ebb5b8495b9ea-3.8.0-2.fc19.x86_64.conf
 +++ /dev/null
 @@ -1,8 +0,0 @@
@@ -161,7 +161,7 @@ index e36a1fd..0000000
 -initrd     /boot/initrd-3.8.0-2.fc19.x86_64
 diff --git a/test/grub2-support_files/6a9857a393724b7a981ebb5b8495b9ea-3.8.1-2.fc19.x86_64.conf b/test/grub2-support_files/6a9857a393724b7a981ebb5b8495b9ea-3.8.1-2.fc19.x86_64.conf
 deleted file mode 100644
-index 382d1af..0000000
+index e1c61a8..0000000
 --- a/test/grub2-support_files/6a9857a393724b7a981ebb5b8495b9ea-3.8.1-2.fc19.x86_64.conf
 +++ /dev/null
 @@ -1,8 +0,0 @@
@@ -175,7 +175,7 @@ index 382d1af..0000000
 -initrd     /boot/initrd-3.8.1-2.fc19.x86_64
 diff --git a/test/grub2-support_files/6a9857a393724b7a981ebb5b8495b9ea-tboot-3.8.0-2.fc19.x86_64.conf b/test/grub2-support_files/6a9857a393724b7a981ebb5b8495b9ea-tboot-3.8.0-2.fc19.x86_64.conf
 deleted file mode 100644
-index 05c0910..0000000
+index 4a60fbc..0000000
 --- a/test/grub2-support_files/6a9857a393724b7a981ebb5b8495b9ea-tboot-3.8.0-2.fc19.x86_64.conf
 +++ /dev/null
 @@ -1,10 +0,0 @@
@@ -191,7 +191,7 @@ index 05c0910..0000000
 -initrd     /boot/initrd-3.8.0-2.fc19.x86_64
 diff --git a/test/grub2-support_files/6a9857a393724b7a981ebb5b8495b9ea-tboot-3.8.1-2.fc19.x86_64.conf b/test/grub2-support_files/6a9857a393724b7a981ebb5b8495b9ea-tboot-3.8.1-2.fc19.x86_64.conf
 deleted file mode 100644
-index db17a93..0000000
+index 34c0e09..0000000
 --- a/test/grub2-support_files/6a9857a393724b7a981ebb5b8495b9ea-tboot-3.8.1-2.fc19.x86_64.conf
 +++ /dev/null
 @@ -1,10 +0,0 @@

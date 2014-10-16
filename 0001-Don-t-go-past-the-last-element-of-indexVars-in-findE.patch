@@ -1,7 +1,7 @@
-From 4dbf9c7e15420eb06540bb426bf36c434787e344 Mon Sep 17 00:00:00 2001
+From 639b9ab2462d4dddd8b8cff04e8db352cb6dc5d5 Mon Sep 17 00:00:00 2001
 From: Yannick Brosseau <scientist@fb.com>
 Date: Thu, 3 Jul 2014 13:55:19 -0700
-Subject: [PATCH 1/9] Don't go past the last element of indexVars in
+Subject: [PATCH 01/10] Don't go past the last element of indexVars in
  findEntryByPath
 
 We add a chance of creating an infinite loop, because we

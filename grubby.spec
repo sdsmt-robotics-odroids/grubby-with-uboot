@@ -1,6 +1,6 @@
 Name: grubby
 Version: 8.35
-Release: 6%{?dist}
+Release: 7%{?dist}
 Summary: Command line tool for updating bootloader configs
 Group: System Environment/Base
 License: GPLv2+
@@ -14,13 +14,11 @@ Patch0002: 0002-Add-bls-test-harness-bits.patch
 Patch0003: 0003-grubby-fix-initrd-updating-when-multiboot-exist.patch
 Patch0004: 0004-Tell-a-slightly-better-fib-about-default-bootloader-.patch
 Patch0005: 0005-Make-findTemplate-actually-return-the-saved-default.patch
-Patch0006: 0006-Support-filtering-update-kernel-by-title-as-well.patch
-Patch0007: 0007-Conditionally-create-debug-entries-when-installing-k.patch
-Patch0008: 0008-Revert-Add-bls-test-harness-bits.patch
-Patch0009: 0009-Always-error-check-getLineByType.patch
-Patch0010: 0001-Add-devtree-support-to-extlinux-1088933.patch
-Patch0011: 0002-add-support-for-devicetree-directories-for-use-on-ar.patch
-Patch0012: 0003-cleanup-dtb-handling-to-work-in-the-supported-usecas.patch
+Patch0006: 0006-Revert-Add-bls-test-harness-bits.patch
+Patch0007: 0007-Always-error-check-getLineByType.patch
+Patch0008: 0008-Add-devtree-support-to-extlinux-1088933.patch
+Patch0009: 0009-add-support-for-devicetree-directories-for-use-on-ar.patch
+Patch0010: 0010-cleanup-dtb-handling-to-work-in-the-supported-usecas.patch
 
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildRequires: pkgconfig glib2-devel popt-devel 
@@ -90,6 +88,12 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Thu Oct 16 2014 Peter Jones <pjones@redhat.com> - 8.35-7
+- Revert "debug" image creation for now
+  Resolves: rhbz#1153410
+- Fix minor quoting errors in dtbdir code
+  Resolves: rhbz#1088933
+
 * Wed Oct 15 2014 Peter Jones <pjones@redhat.com> - 8.35-6
 - Update grubby to support device tree options for arm.  Again.
   Resolves: rhbz#1088933

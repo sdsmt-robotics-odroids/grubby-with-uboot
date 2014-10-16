@@ -1,7 +1,7 @@
-From f631d090d3a78327e6d2642465be6ab559dd7f4e Mon Sep 17 00:00:00 2001
+From 629922b6dc32e4209980d7198b7d2aabb722033a Mon Sep 17 00:00:00 2001
 From: Peter Jones <pjones@redhat.com>
 Date: Mon, 15 Sep 2014 14:31:01 -0400
-Subject: [PATCH 5/9] Make findTemplate actually return the saved default.
+Subject: [PATCH 05/10] Make findTemplate actually return the saved default.
 
 Really not sure why this wasn't returning here before; going into the
 loop below is just going to clobber all that it's done.
