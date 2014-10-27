@@ -1,6 +1,6 @@
 Name: grubby
 Version: 8.35
-Release: 7%{?dist}
+Release: 8%{?dist}
 Summary: Command line tool for updating bootloader configs
 Group: System Environment/Base
 License: GPLv2+
@@ -19,6 +19,7 @@ Patch0007: 0007-Always-error-check-getLineByType.patch
 Patch0008: 0008-Add-devtree-support-to-extlinux-1088933.patch
 Patch0009: 0009-add-support-for-devicetree-directories-for-use-on-ar.patch
 Patch0010: 0010-cleanup-dtb-handling-to-work-in-the-supported-usecas.patch
+Patch0011: 0001-Treat-kernel-and-kernel-core-as-identical-in-terms-o.patch
 
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildRequires: pkgconfig glib2-devel popt-devel 
@@ -88,6 +89,10 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Mon Oct 27 2014 Peter Jones <pjones@redhat.com> - 8.35-8
+- Treat kernel and kernel-core as identical in terms of --make-default
+  Resolves: rhbz#1141414
+
 * Thu Oct 16 2014 Peter Jones <pjones@redhat.com> - 8.35-7
 - Revert "debug" image creation for now
   Resolves: rhbz#1153410
