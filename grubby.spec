@@ -1,5 +1,5 @@
 Name: grubby
-Version: 8.38
+Version: 8.39
 Release: 1%{?dist}
 Summary: Command line tool for updating bootloader configs
 Group: System Environment/Base
@@ -79,6 +79,13 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Tue Apr 14 2015 Peter Jones <pjones@redhat.com> - 8.39-1
+- Update to 8.39
+- Fix title extraction with some config file types
+  Resolves: rhbz#1204353
+  Resolves: rhbz#1204888
+  Resolves: rhbz#1206943
+
 * Tue Apr 14 2015 Peter Jones <pjones@redhat.com> - 8.38-1
 - Update to 8.38
 - Fix title extraction with some config file types
