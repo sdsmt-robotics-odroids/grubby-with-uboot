@@ -4,9 +4,9 @@ Release: 4%{?dist}
 Summary: Command line tool for updating bootloader configs
 Group: System Environment/Base
 License: GPLv2+
-URL: http://git.fedorahosted.org/git/grubby.git
+URL: https://github.com/rhinstaller/grubby
 # we only pull git snaps at the moment
-# git clone git://git.fedorahosted.org/git/grubby.git
+# git clone git@github.com:rhinstaller/grubby.git
 # git archive --format=tar --prefix=grubby-%{version}/ HEAD |bzip2 > grubby-%{version}.tar.bz2
 Source0: %{name}-%{version}.tar.bz2
 
@@ -26,8 +26,8 @@ Requires: uboot-tools
 %endif
 
 %description
-grubby  is  a command line tool for updating and displaying information about 
-the configuration files for the grub, lilo, elilo (ia64),  yaboot (powerpc)  
+grubby is a command line tool for updating and displaying information about
+the configuration files for the grub, lilo, elilo (ia64), yaboot (powerpc)
 and zipl (s390) boot loaders. It is primarily designed to be used from scripts
 which install new kernels and need to find information about the current boot 
 environment.
