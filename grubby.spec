@@ -17,8 +17,8 @@ BuildRequires: libblkid-devel git
 # for make test / getopt:
 BuildRequires: util-linux-ng
 %ifarch aarch64 i686 x86_64 ppc ppc64
-BuildRequires: grub2-tools
-Requires: grub2-tools
+BuildRequires: grub2-tools-minimal
+Requires: grub2-tools-minimal
 %endif
 %ifarch s390 s390x
 Requires: s390utils-base
