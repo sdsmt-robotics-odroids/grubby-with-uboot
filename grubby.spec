@@ -1,14 +1,15 @@
 Name: grubby
 Version: 8.40
-Release: 6%{?dist}
+Release: 7%{?dist}
 Summary: Command line tool for updating bootloader configs
 Group: System Environment/Base
 License: GPLv2+
 URL: https://github.com/rhinstaller/grubby
 # we only pull git snaps at the moment
 # git clone git@github.com:rhinstaller/grubby.git
-# git archive --format=tar --prefix=grubby-%{version}/ HEAD |bzip2 > grubby-%{version}.tar.bz2
-Source0: %{name}-%{version}.tar.bz2
+# git archive --format=tar --prefix=grubby-%%{version}/ HEAD |bzip2 > grubby-%%{version}.tar.bz2
+# Source0: %%{name}-%%{version}.tar.bz2
+Source0: https://github.com/rhboot/grubby/archive/%{version}-1.tar.gz
 
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildRequires: pkgconfig glib2-devel popt-devel 
@@ -16,7 +17,8 @@ BuildRequires: libblkid-devel git
 # for make test / getopt:
 BuildRequires: util-linux-ng
 %ifarch aarch64 i686 x86_64 ppc ppc64
-BuildRequires: /usr/bin/grub2-editenv
+BuildRequires: grub2-tools
+Requires: grub2-tools
 %endif
 %ifarch s390 s390x
 Requires: s390utils-base
@@ -33,7 +35,7 @@ which install new kernels and need to find information about the current boot
 environment.
 
 %prep
-%setup -q
+%setup -q -n grubby-%{version}-1
 
 git init
 git config user.email "noone@example.com"
@@ -79,6 +81,10 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Tue Sep 12 2017 Peter Jones <pjones@redhat.com> - 8.40-7
+- Explicitly require grub2-tools on platforms that need grub2-editenv
+- Minor packaging cleanups
+
 * Wed Aug 02 2017 Fedora Release Engineering <releng@fedoraproject.org> - 8.40-6
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_27_Binutils_Mass_Rebuild
 
@@ -411,7 +417,7 @@ rm -rf $RPM_BUILD_ROOT
   Resolves: rhbz#520515
 
 * Wed Sep 09 2009 Hans de Goede <hdegoede@redhat.com> - 7.0.4-1
-- Add --dracut cmdline argument for %post generation of dracut initrd
+- Add --dracut cmdline argument for %%post generation of dracut initrd
 
 * Wed Aug 26 2009 Hans de Goede <hdegoede@redhat.com> - 7.0.3-1
 - Silence error when no /etc/sysconfig/keyboard (#517187)
