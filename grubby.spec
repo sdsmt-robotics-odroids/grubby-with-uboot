@@ -1,8 +1,7 @@
 Name: grubby
 Version: 8.40
-Release: 7%{?dist}
+Release: 8%{?dist}
 Summary: Command line tool for updating bootloader configs
-Group: System Environment/Base
 License: GPLv2+
 URL: https://github.com/rhinstaller/grubby
 # we only pull git snaps at the moment
@@ -10,21 +9,18 @@ URL: https://github.com/rhinstaller/grubby
 # git archive --format=tar --prefix=grubby-%%{version}/ HEAD |bzip2 > grubby-%%{version}.tar.bz2
 # Source0: %%{name}-%%{version}.tar.bz2
 Source0: https://github.com/rhboot/grubby/archive/%{version}-1.tar.gz
+Patch1: drop-uboot-uImage-creation.patch
 
-BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 BuildRequires: pkgconfig glib2-devel popt-devel 
-BuildRequires: libblkid-devel git
+BuildRequires: libblkid-devel git-core
 # for make test / getopt:
 BuildRequires: util-linux-ng
-%ifarch aarch64 i686 x86_64 ppc ppc64
+%ifarch aarch64 i686 x86_64 %{power64}
 BuildRequires: grub2-tools-minimal
 Requires: grub2-tools-minimal
 %endif
 %ifarch s390 s390x
 Requires: s390utils-base
-%endif
-%ifarch %{arm}
-Requires: uboot-tools
 %endif
 
 %description
@@ -55,32 +51,21 @@ make test
 %endif
 
 %install
-rm -rf $RPM_BUILD_ROOT
 make install DESTDIR=$RPM_BUILD_ROOT mandir=%{_mandir}
-%ifarch %{arm}
-mkdir -p $RPM_BUILD_ROOT%{_sysconfdir}/sysconfig/
-install -p uboot $RPM_BUILD_ROOT%{_sysconfdir}/sysconfig/uboot
-mkdir -p $RPM_BUILD_ROOT/boot
-echo " " >> $RPM_BUILD_ROOT/boot/boot.scr
-%endif
-
-%clean
-rm -rf $RPM_BUILD_ROOT
 
 %files
-%defattr(-,root,root,-)
 %{!?_licensedir:%global license %%doc}
 %license COPYING
 /sbin/installkernel
 /sbin/new-kernel-pkg
 /sbin/grubby
 %{_mandir}/man8/*.8*
-%ifarch %{arm}
-%config(noreplace) %{_sysconfdir}/sysconfig/uboot
-%config(noreplace) /boot/boot.scr
-%endif
 
 %changelog
+* Wed Jan 24 2018 Peter Robinson <pbrobinson@fedoraproject.org> 8.40-8
+- Drop u-boot uImage generation on ARMv7
+- Minor cleanups
+
 * Tue Sep 12 2017 Peter Jones <pjones@redhat.com> - 8.40-7
 - Explicitly require grub2-tools on platforms that need grub2-editenv
 - Minor packaging cleanups
