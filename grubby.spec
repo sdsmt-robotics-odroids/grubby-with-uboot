@@ -1,6 +1,6 @@
 Name: grubby
 Version: 8.40
-Release: 8%{?dist}
+Release: 9%{?dist}
 Summary: Command line tool for updating bootloader configs
 License: GPLv2+
 URL: https://github.com/rhinstaller/grubby
@@ -62,6 +62,9 @@ make install DESTDIR=$RPM_BUILD_ROOT mandir=%{_mandir}
 %{_mandir}/man8/*.8*
 
 %changelog
+* Wed Feb 07 2018 Fedora Release Engineering <releng@fedoraproject.org> - 8.40-9
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_28_Mass_Rebuild
+
 * Wed Jan 24 2018 Peter Robinson <pbrobinson@fedoraproject.org> 8.40-8
 - Drop u-boot uImage generation on ARMv7
 - Minor cleanups
