@@ -1,6 +1,6 @@
 Name: grubby
 Version: 8.40
-Release: 9%{?dist}
+Release: 10%{?dist}
 Summary: Command line tool for updating bootloader configs
 License: GPLv2+
 URL: https://github.com/rhinstaller/grubby
@@ -10,6 +10,9 @@ URL: https://github.com/rhinstaller/grubby
 # Source0: %%{name}-%%{version}.tar.bz2
 Source0: https://github.com/rhboot/grubby/archive/%{version}-1.tar.gz
 Patch1: drop-uboot-uImage-creation.patch
+Patch2: 0001-Change-return-type-in-getRootSpecifier.patch
+Patch3: 0002-Add-btrfs-subvolume-support-for-grub2.patch
+Patch4: 0003-Add-tests-for-btrfs-support.patch
 
 BuildRequires: pkgconfig glib2-devel popt-devel 
 BuildRequires: libblkid-devel git-core
@@ -62,6 +65,9 @@ make install DESTDIR=$RPM_BUILD_ROOT mandir=%{_mandir}
 %{_mandir}/man8/*.8*
 
 %changelog
+* Sat Mar 03 2018 Nathaniel McCallum <npmccallum@redhat.com> - 8.40-10
+- Add support for /boot on btrfs subvolumes
+
 * Wed Feb 07 2018 Fedora Release Engineering <releng@fedoraproject.org> - 8.40-9
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_28_Mass_Rebuild
 
