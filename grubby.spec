@@ -1,6 +1,6 @@
 Name: grubby
 Version: 8.40
-Release: 10%{?dist}
+Release: 11%{?dist}
 Summary: Command line tool for updating bootloader configs
 License: GPLv2+
 URL: https://github.com/rhinstaller/grubby
@@ -21,6 +21,7 @@ BuildRequires: util-linux-ng
 %ifarch aarch64 i686 x86_64 %{power64}
 BuildRequires: grub2-tools-minimal
 Requires: grub2-tools-minimal
+Requires: grub2-tools
 %endif
 %ifarch s390 s390x
 Requires: s390utils-base
@@ -56,6 +57,11 @@ make test
 %install
 make install DESTDIR=$RPM_BUILD_ROOT mandir=%{_mandir}
 
+%postun
+if [ "$1" = 0 ] ; then
+    grub2-switch-to-blscfg &>/dev/null || :
+fi
+
 %files
 %{!?_licensedir:%global license %%doc}
 %license COPYING
@@ -65,6 +71,9 @@ make install DESTDIR=$RPM_BUILD_ROOT mandir=%{_mandir}
 %{_mandir}/man8/*.8*
 
 %changelog
+* Fri Apr 06 2018 Javier Martinez Canillas <javierm@redhat.com> - 8.40-11
+- Switch grub2 config to BLS configuration on %%postun
+
 * Sat Mar 03 2018 Nathaniel McCallum <npmccallum@redhat.com> - 8.40-10
 - Add support for /boot on btrfs subvolumes
 
