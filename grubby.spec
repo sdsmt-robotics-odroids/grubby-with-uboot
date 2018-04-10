@@ -1,6 +1,6 @@
 Name: grubby
 Version: 8.40
-Release: 11%{?dist}
+Release: 12%{?dist}
 Summary: Command line tool for updating bootloader configs
 License: GPLv2+
 URL: https://github.com/rhinstaller/grubby
@@ -59,7 +59,7 @@ make install DESTDIR=$RPM_BUILD_ROOT mandir=%{_mandir}
 
 %postun
 if [ "$1" = 0 ] ; then
-    grub2-switch-to-blscfg &>/dev/null || :
+    grub2-switch-to-blscfg --backup-suffix=.rpmsave &>/dev/null || :
 fi
 
 %files
@@ -71,6 +71,9 @@ fi
 %{_mandir}/man8/*.8*
 
 %changelog
+* Tue Apr 10 2018 Javier Martinez Canillas <javierm@redhat.com> - 8.40-12
+- Use .rpmsave as backup suffix when switching to BLS configuration
+
 * Fri Apr 06 2018 Javier Martinez Canillas <javierm@redhat.com> - 8.40-11
 - Switch grub2 config to BLS configuration on %%postun
 
