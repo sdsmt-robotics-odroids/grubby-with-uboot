@@ -1,4 +1,6 @@
-Name: grubby
+%define _with_uboot 1
+
+Name: grubby%{?_with_uboot:-with-uboot}
 Version: 8.40
 Release: 16%{?dist}
 Summary: Command line tool for updating bootloader configs
@@ -12,7 +14,9 @@ Source0: https://github.com/rhboot/grubby/archive/%{version}-1.tar.gz
 Source1: grubby-bls
 Source2: grubby.in
 Source3: installkernel.in
+%if ! 0%{?_with_uboot}
 Patch1: drop-uboot-uImage-creation.patch
+%endif
 Patch2: 0001-Change-return-type-in-getRootSpecifier.patch
 Patch3: 0002-Add-btrfs-subvolume-support-for-grub2.patch
 Patch4: 0003-Add-tests-for-btrfs-support.patch
@@ -30,6 +34,12 @@ Requires: grub2-tools
 %endif
 %ifarch s390 s390x
 Requires: s390utils-base
+%endif
+
+%if 0%{?_with_uboot}
+Conflicts: grubby
+Provides: grubby = %{version}-%{release}
+Provides: grubby%{?_isa} = %{version}-%{release}
 %endif
 
 %description
