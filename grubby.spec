@@ -1,6 +1,6 @@
 Name: grubby
 Version: 8.40
-Release: 12%{?dist}
+Release: 13%{?dist}
 Summary: Command line tool for updating bootloader configs
 License: GPLv2+
 URL: https://github.com/rhinstaller/grubby
@@ -9,6 +9,7 @@ URL: https://github.com/rhinstaller/grubby
 # git archive --format=tar --prefix=grubby-%%{version}/ HEAD |bzip2 > grubby-%%{version}.tar.bz2
 # Source0: %%{name}-%%{version}.tar.bz2
 Source0: https://github.com/rhboot/grubby/archive/%{version}-1.tar.gz
+Source1: grubby-bls
 Patch1: drop-uboot-uImage-creation.patch
 Patch2: 0001-Change-return-type-in-getRootSpecifier.patch
 Patch3: 0002-Add-btrfs-subvolume-support-for-grub2.patch
@@ -34,6 +35,8 @@ and zipl (s390) boot loaders. It is primarily designed to be used from scripts
 which install new kernels and need to find information about the current boot 
 environment.
 
+%global debug_package %{nil}
+
 %prep
 %setup -q -n grubby-%{version}-1
 
@@ -57,20 +60,29 @@ make test
 %install
 make install DESTDIR=$RPM_BUILD_ROOT mandir=%{_mandir}
 
-%postun
-if [ "$1" = 0 ] ; then
-    grub2-switch-to-blscfg --backup-suffix=.rpmsave &>/dev/null || :
-fi
+rm %{buildroot}/sbin/installkernel
+rm %{buildroot}/sbin/new-kernel-pkg
+cp %{SOURCE1} %{buildroot}/sbin/grubby
 
-%files
+%package bls
+Summary:	Command line tool for updating BootLoaderSpec files
+Obsoletes:	%{name} < 8.40-13
+BuildArch:	noarch
+
+%description bls
+This package provides a grubby wrapper that manages BootLoaderSpec files and is
+meant to only be used for legacy compatibility users with existing grubby users.
+
+%files bls
 %{!?_licensedir:%global license %%doc}
 %license COPYING
-/sbin/installkernel
-/sbin/new-kernel-pkg
 /sbin/grubby
 %{_mandir}/man8/*.8*
 
 %changelog
+* Fri Jul 13 2018 Javier Martinez Canillas <javierm@redhat.com> - 8.40-13
+- Add a grubby-bls package that contains grubby-bls script and obsoletes grubby
+
 * Tue Apr 10 2018 Javier Martinez Canillas <javierm@redhat.com> - 8.40-12
 - Use .rpmsave as backup suffix when switching to BLS configuration
 
