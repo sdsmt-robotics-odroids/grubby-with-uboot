@@ -15,6 +15,7 @@ Patch1: drop-uboot-uImage-creation.patch
 Patch2: 0001-Change-return-type-in-getRootSpecifier.patch
 Patch3: 0002-Add-btrfs-subvolume-support-for-grub2.patch
 Patch4: 0003-Add-tests-for-btrfs-support.patch
+Patch5: 0004-Honor-sbindir.patch
 
 BuildRequires: pkgconfig glib2-devel popt-devel 
 BuildRequires: libblkid-devel git-core sed
@@ -59,10 +60,10 @@ make test
 %endif
 
 %install
-make install DESTDIR=$RPM_BUILD_ROOT mandir=%{_mandir}
+make install DESTDIR=$RPM_BUILD_ROOT mandir=%{_mandir} sbindir=%{_sbindir}
 
-mkdir -p %{buildroot}%{_libexecdir}/grubby/
-mv -v %{buildroot}/sbin/grubby %{buildroot}%{_libexecdir}/grubby/grubby
+mkdir -p %{buildroot}%{_libexecdir}/grubby/ %{buildroot}%{_sbindir}/
+mv -v %{buildroot}%{_sbindir}/grubby %{buildroot}%{_libexecdir}/grubby/grubby
 cp -v %{SOURCE1} %{buildroot}%{_libexecdir}/grubby/
 sed -e "s,@@LIBEXECDIR@@,%{_libexecdir},g" %{SOURCE2} \
 	> %{buildroot}%{_sbindir}/grubby
@@ -81,9 +82,9 @@ meant to only be used for legacy compatibility users with existing grubby users.
 %license COPYING
 %dir %{_libexecdir}/grubby
 %{_libexecdir}/grubby/grubby
-/sbin/grubby
-/sbin/installkernel
-/sbin/new-kernel-pkg
+%{_sbindir}/grubby
+%{_sbindir}/installkernel
+%{_sbindir}/new-kernel-pkg
 %{_mandir}/man8/*.8*
 
 %files bls
@@ -91,7 +92,7 @@ meant to only be used for legacy compatibility users with existing grubby users.
 %license COPYING
 %dir %{_libexecdir}/grubby
 %{_libexecdir}/grubby/grubby-bls
-/sbin/grubby
+%{_sbindir}/grubby
 %{_mandir}/man8/*.8*
 
 %changelog
