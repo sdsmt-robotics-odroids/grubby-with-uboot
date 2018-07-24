@@ -1,6 +1,6 @@
 Name: grubby
 Version: 8.40
-Release: 13%{?dist}
+Release: 14%{?dist}
 Summary: Command line tool for updating bootloader configs
 License: GPLv2+
 URL: https://github.com/rhinstaller/grubby
@@ -81,21 +81,24 @@ meant to only be used for legacy compatibility users with existing grubby users.
 %{!?_licensedir:%global license %%doc}
 %license COPYING
 %dir %{_libexecdir}/grubby
-%{_libexecdir}/grubby/grubby
-%{_sbindir}/grubby
-%{_sbindir}/installkernel
-%{_sbindir}/new-kernel-pkg
+%attr(0755,root,root) %{_libexecdir}/grubby/grubby
+%attr(0755,root,root) %{_sbindir}/grubby
+%attr(0755,root,root) %{_sbindir}/installkernel
+%attr(0755,root,root) %{_sbindir}/new-kernel-pkg
 %{_mandir}/man8/*.8*
 
 %files bls
 %{!?_licensedir:%global license %%doc}
 %license COPYING
 %dir %{_libexecdir}/grubby
-%{_libexecdir}/grubby/grubby-bls
-%{_sbindir}/grubby
+%attr(0755,root,root) %{_libexecdir}/grubby/grubby-bls
+%attr(0755,root,root) %{_sbindir}/grubby
 %{_mandir}/man8/*.8*
 
 %changelog
+* Tue Jul 24 2018 Peter Jones <pjones@redhat.com> - 8.40-14
+- Fix permissions on /usr/sbin/grubby
+
 * Fri Jul 13 2018 Javier Martinez Canillas <javierm@redhat.com> - 8.40-13
 - Add a grubby-bls package that conflicts with grubby
 

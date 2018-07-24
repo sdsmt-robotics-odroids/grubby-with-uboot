@@ -2,3 +2,6 @@ grubby-*.tar.bz2
 clog
 *.rpm
 /8.40-1.tar.gz
+grubby-*/
+.build*.log
+.*sw?
