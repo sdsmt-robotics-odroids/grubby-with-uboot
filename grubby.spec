@@ -1,6 +1,6 @@
 Name: grubby
 Version: 8.40
-Release: 15%{?dist}
+Release: 16%{?dist}
 Summary: Command line tool for updating bootloader configs
 License: GPLv2+
 URL: https://github.com/rhinstaller/grubby
@@ -11,14 +11,16 @@ URL: https://github.com/rhinstaller/grubby
 Source0: https://github.com/rhboot/grubby/archive/%{version}-1.tar.gz
 Source1: grubby-bls
 Source2: grubby.in
+Source3: installkernel.in
 Patch1: drop-uboot-uImage-creation.patch
 Patch2: 0001-Change-return-type-in-getRootSpecifier.patch
 Patch3: 0002-Add-btrfs-subvolume-support-for-grub2.patch
 Patch4: 0003-Add-tests-for-btrfs-support.patch
 Patch5: 0004-Honor-sbindir.patch
+Patch6: 0005-installkernel-use-kernel-install.patch
 
 BuildRequires: pkgconfig glib2-devel popt-devel 
-BuildRequires: libblkid-devel git-core sed
+BuildRequires: libblkid-devel git-core sed gcc make
 # for make test / getopt:
 BuildRequires: util-linux-ng
 %ifarch aarch64 i686 x86_64 %{power64}
@@ -62,11 +64,14 @@ make test
 %install
 make install DESTDIR=$RPM_BUILD_ROOT mandir=%{_mandir} sbindir=%{_sbindir}
 
-mkdir -p %{buildroot}%{_libexecdir}/grubby/ %{buildroot}%{_sbindir}/
+mkdir -p %{buildroot}%{_libexecdir}/{grubby,installkernel}/ %{buildroot}%{_sbindir}/
 mv -v %{buildroot}%{_sbindir}/grubby %{buildroot}%{_libexecdir}/grubby/grubby
+mv -v %{buildroot}%{_sbindir}/installkernel %{buildroot}%{_libexecdir}/installkernel/installkernel
 cp -v %{SOURCE1} %{buildroot}%{_libexecdir}/grubby/
 sed -e "s,@@LIBEXECDIR@@,%{_libexecdir}/grubby,g" %{SOURCE2} \
 	> %{buildroot}%{_sbindir}/grubby
+sed -e "s,@@LIBEXECDIR@@,%{_libexecdir}/installkernel,g" %{SOURCE3} \
+	> %{buildroot}%{_sbindir}/installkernel
 
 %package bls
 Summary:	Command line tool for updating BootLoaderSpec files
@@ -82,6 +87,7 @@ meant to only be used for legacy compatibility users with existing grubby users.
 %license COPYING
 %dir %{_libexecdir}/grubby
 %attr(0755,root,root) %{_libexecdir}/grubby/grubby
+%attr(0755,root,root) %{_libexecdir}/installkernel/installkernel
 %attr(0755,root,root) %{_sbindir}/grubby
 %attr(0755,root,root) %{_sbindir}/installkernel
 %attr(0755,root,root) %{_sbindir}/new-kernel-pkg
@@ -96,6 +102,9 @@ meant to only be used for legacy compatibility users with existing grubby users.
 %{_mandir}/man8/*.8*
 
 %changelog
+* Fri Aug 03 2018 Javier Martinez Canillas <javierm@redhat.com> - 8.40-16
+- Make installkernel to use kernel-install scripts on BLS configuration
+
 * Tue Jul 24 2018 Javier Martinez Canillas <javierm@redhat.com> - 8.40-15
 - Fix grubby wrapper paths
 
