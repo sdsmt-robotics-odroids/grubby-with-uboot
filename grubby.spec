@@ -87,6 +87,7 @@ meant to only be used for legacy compatibility users with existing grubby users.
 %license COPYING
 %dir %{_libexecdir}/grubby
 %attr(0755,root,root) %{_libexecdir}/grubby/grubby
+%dir %{_libexecdir}/installkernel
 %attr(0755,root,root) %{_libexecdir}/installkernel/installkernel
 %attr(0755,root,root) %{_sbindir}/grubby
 %attr(0755,root,root) %{_sbindir}/installkernel
